@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "brain.js": "^2.0.0-beta.4"
+    "brain.js": "^2.0.0-beta.4",
+    "express": "^4.17.3"
   }
 }
