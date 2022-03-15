@@ -310,12 +310,19 @@ const trainingData = [
   'Ziminiar'
 ]
 
-const lstm = new brain.recurrent.LSTM();
-const result = lstm.train(trainingData, {
+const net = new brain.recurrent.LSTM();
+const result = net.train(trainingData, {
   iterations: 1500,
   log: console.log,
   errorThresh: 0.4
 });
 
+let netFunctionAsString = net.toFunction().toString();
 
-module.exports = {trained: lstm}
+netFunctionAsString = ["module.exports.net = ", ...netFunctionAsString].join("")
+netFunctionAsString = netFunctionAsString.replace('zeros$1(size)', 'zeros(size)')
+
+fs.writeFileSync('trained.js', netFunctionAsString) 
+
+
+module.exports = {trained: net}

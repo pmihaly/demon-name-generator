@@ -1,17 +1,9 @@
-const fs = require("fs");
+const morgan = require("morgan");
 const app = require("express")();
-const brain = require("brain.js");
-
-const readJsonFile = (filename) =>
-  JSON.parse(fs.readFileSync(filename, "utf8"));
-
-const net = new brain.recurrent.LSTM();
-const trainedModel = net.fromJSON(readJsonFile("trained.json"));
+const { net } = require("./trained.js");
 
 const generateSpookyNames = (amountToGenerate) => (cursedness) =>
-  Array.from({ length: amountToGenerate }, () =>
-    trainedModel.run("", true, cursedness)
-  );
+  Array.from({ length: amountToGenerate }, () => net("", true, cursedness));
 
 const parseIntOrReturnNull = (stringToParse) => {
   try {
@@ -20,6 +12,8 @@ const parseIntOrReturnNull = (stringToParse) => {
     return null;
   }
 };
+
+app.use(morgan("tiny"));
 
 app.get("/:cursedness?", (req, res) => {
   res.json(
