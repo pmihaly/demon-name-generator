@@ -1,7 +1,13 @@
 const brain = require('brain.js')
 const fs = require('fs')
 
+const goodResults = [
+  'Haeva',
+  'Shki',
+]
+
 const trainingData = [
+  ...goodResults,
   'Aamon',
   'Amon',
   'Abaddon',
