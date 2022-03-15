@@ -15,9 +15,13 @@ const parseIntOrReturnNull = (stringToParse) => {
 
 app.use(morgan("tiny"));
 
-app.get("/:cursedness?", (req, res) => {
+app.get("/", (req, res) => {
+  const { amountToGenerate, cursedness } = req.query;
+
   res.json(
-    generateSpookyNames(20)(parseIntOrReturnNull(req.params.cursedness) || 1)
+    generateSpookyNames(parseIntOrReturnNull(amountToGenerate) || 20)(
+      parseIntOrReturnNull(cursedness) || 1
+    )
   );
 });
 
